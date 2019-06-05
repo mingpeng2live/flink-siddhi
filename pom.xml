@@ -23,7 +23,7 @@ under the License.
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.github.haoch</groupId>
-    <artifactId>flink-siddhi-parent_2.11</artifactId>
+    <artifactId>flink-siddhi-parent</artifactId>
 
     <version>0.2.0-SNAPSHOT</version>
     <modules>
@@ -34,35 +34,64 @@ under the License.
     <packaging>pom</packaging>
 
     <properties>
-        <siddhi.version>4.2.40</siddhi.version>
-        <flink.version>1.7.0</flink.version>
-        <scala.binary.version>2.11</scala.binary.version>
+        <!--<siddhi.version>4.2.40</siddhi.version>-->
+        <siddhi.version>5.0.0</siddhi.version>
+        <flink.version>1.7.2</flink.version>
+        <scala.binary.version>2.12</scala.binary.version>
     </properties>
 
     <dependencies>
         <!-- core dependencies -->
+        <!--<dependency>-->
+            <!--<groupId>org.wso2.siddhi</groupId>-->
+            <!--<artifactId>siddhi-core</artifactId>-->
+            <!--<version>${siddhi.version}</version>-->
+            <!--<exclusions>-->
+                <!--<exclusion>  &lt;!&ndash; declare the exclusion here &ndash;&gt;-->
+                    <!--<groupId>org.apache.directory.jdbm</groupId>-->
+                    <!--<artifactId>apacheds-jdbm1</artifactId>-->
+                <!--</exclusion>-->
+            <!--</exclusions>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>org.wso2.siddhi</groupId>-->
+            <!--<artifactId>siddhi-query-api</artifactId>-->
+            <!--<version>${siddhi.version}</version>-->
+            <!--<exclusions>-->
+                <!--<exclusion>  &lt;!&ndash; declare the exclusion here &ndash;&gt;-->
+                    <!--<groupId>org.apache.directory.jdbm</groupId>-->
+                    <!--<artifactId>apacheds-jdbm1</artifactId>-->
+                <!--</exclusion>-->
+            <!--</exclusions>-->
+        <!--</dependency>-->
+
         <dependency>
-            <groupId>org.wso2.siddhi</groupId>
+            <groupId>io.siddhi</groupId>
             <artifactId>siddhi-core</artifactId>
             <version>${siddhi.version}</version>
-            <exclusions>
-                <exclusion>  <!-- declare the exclusion here -->
-                    <groupId>org.apache.directory.jdbm</groupId>
-                    <artifactId>apacheds-jdbm1</artifactId>
-                </exclusion>
-            </exclusions>
+            <!--<exclusions>-->
+                <!--<exclusion>-->
+                    <!--<artifactId>slf4j-simple</artifactId>-->
+                    <!--<groupId>org.slf4j</groupId>-->
+                <!--</exclusion>-->
+            <!--</exclusions>-->
         </dependency>
         <dependency>
-            <groupId>org.wso2.siddhi</groupId>
+            <groupId>io.siddhi</groupId>
             <artifactId>siddhi-query-api</artifactId>
             <version>${siddhi.version}</version>
-            <exclusions>
-                <exclusion>  <!-- declare the exclusion here -->
-                    <groupId>org.apache.directory.jdbm</groupId>
-                    <artifactId>apacheds-jdbm1</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
+        <dependency>
+            <groupId>io.siddhi</groupId>
+            <artifactId>siddhi-query-compiler</artifactId>
+            <version>${siddhi.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.siddhi</groupId>
+            <artifactId>siddhi-annotations</artifactId>
+            <version>${siddhi.version}</version>
+        </dependency>
+
 
         <!-- Core streaming API -->
         <dependency>
@@ -103,6 +132,7 @@ under the License.
             <groupId>org.apache.flink</groupId>
             <artifactId>flink-scala_${scala.binary.version}</artifactId>
             <version>${flink.version}</version>
+            <scope>provided</scope>
             <exclusions>
                 <exclusion>  <!-- declare the exclusion here -->
                     <groupId>org.apache.directory.jdbm</groupId>

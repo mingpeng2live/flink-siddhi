@@ -17,12 +17,12 @@
 
 package org.apache.flink.streaming.siddhi.schema;
 
+import io.siddhi.query.api.definition.Attribute;
+import io.siddhi.query.api.definition.StreamDefinition;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.flink.api.common.typeinfo.TypeInformation;
 import org.apache.flink.streaming.siddhi.utils.SiddhiTypeFactory;
 import org.apache.flink.util.Preconditions;
-import org.wso2.siddhi.query.api.definition.Attribute;
-import org.wso2.siddhi.query.api.definition.StreamDefinition;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,11 +62,6 @@ public class SiddhiStreamSchema<T> extends StreamSchema<T> {
 
     public String getStreamDefinitionExpression(String streamId) {
         StreamDefinition streamDefinition = getStreamDefinition(streamId);
-        List<String> columns = new ArrayList<>();
-        Preconditions.checkNotNull(streamDefinition, "StreamDefinition is null");
-        for (Attribute attribute : streamDefinition.getAttributeList()) {
-            columns.add(String.format("%s %s", attribute.getName(), attribute.getType().toString().toLowerCase()));
-        }
-        return String.format(DEFINE_STREAM_TEMPLATE, streamDefinition.getId(), StringUtils.join(columns, ","));
+        return getStreamDefinitionExpression(streamDefinition);
     }
 }

@@ -17,9 +17,9 @@
 
 package org.apache.flink.streaming.siddhi.operator;
 
-import java.util.Map;
-import java.util.TreeMap;
-
+import io.siddhi.core.event.Event;
+import io.siddhi.core.stream.output.StreamCallback;
+import io.siddhi.query.api.definition.AbstractDefinition;
 import org.apache.flink.api.common.typeinfo.TypeInformation;
 import org.apache.flink.api.java.tuple.Tuple;
 import org.apache.flink.api.java.tuple.Tuple2;
@@ -33,9 +33,9 @@ import org.apache.flink.streaming.siddhi.utils.SiddhiTupleFactory;
 import org.apache.flink.types.Row;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.wso2.siddhi.core.event.Event;
-import org.wso2.siddhi.core.stream.output.StreamCallback;
-import org.wso2.siddhi.query.api.definition.AbstractDefinition;
+
+import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * Siddhi Stream output callback handler and conver siddhi {@link Event} to required output type,

@@ -19,8 +19,8 @@ package org.apache.flink.streaming.siddhi.control;
 
 import java.io.IOException;
 
+import org.apache.flink.api.common.serialization.AbstractDeserializationSchema;
 import org.apache.flink.shaded.jackson2.com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.flink.streaming.util.serialization.AbstractDeserializationSchema;
 
 public class ControlEventSchema extends AbstractDeserializationSchema<ControlEvent> {
 

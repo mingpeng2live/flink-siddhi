@@ -17,25 +17,28 @@
 
 package org.apache.flink.streaming.siddhi.extension;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import org.wso2.siddhi.core.config.SiddhiAppContext;
-import org.wso2.siddhi.core.exception.SiddhiAppCreationException;
-import org.wso2.siddhi.core.executor.ExpressionExecutor;
-import org.wso2.siddhi.core.executor.function.FunctionExecutor;
-import org.wso2.siddhi.core.util.config.ConfigReader;
-import org.wso2.siddhi.query.api.definition.Attribute;
+import io.siddhi.core.config.SiddhiAppContext;
+import io.siddhi.core.config.SiddhiQueryContext;
+import io.siddhi.core.exception.SiddhiAppCreationException;
+import io.siddhi.core.executor.ExpressionExecutor;
+import io.siddhi.core.executor.function.FunctionExecutor;
+import io.siddhi.core.util.config.ConfigReader;
+import io.siddhi.core.util.snapshot.state.State;
+import io.siddhi.core.util.snapshot.state.StateFactory;
+import io.siddhi.query.api.definition.Attribute;
 
 public class CustomPlusFunctionExtension extends FunctionExecutor {
+
+
     private Attribute.Type returnType;
+
 
     /**
      * The initialization method for FunctionExecutor, this method will be called before the other methods
      */
     @Override
-    protected void init(ExpressionExecutor[] expressionExecutors, ConfigReader configReader, SiddhiAppContext siddhiAppContext) {
-        for (ExpressionExecutor expressionExecutor : attributeExpressionExecutors) {
+    protected StateFactory init(ExpressionExecutor[] expressionExecutors, ConfigReader configReader, SiddhiQueryContext siddhiQueryContext) {
+        for (ExpressionExecutor expressionExecutor : expressionExecutors) {
             Attribute.Type attributeType = expressionExecutor.getReturnType();
             if (attributeType == Attribute.Type.DOUBLE) {
                 returnType = attributeType;
@@ -46,6 +49,7 @@ public class CustomPlusFunctionExtension extends FunctionExecutor {
                 returnType = Attribute.Type.LONG;
             }
         }
+        return null;
     }
 
     /**
@@ -56,7 +60,7 @@ public class CustomPlusFunctionExtension extends FunctionExecutor {
      * @return the function result
      */
     @Override
-    protected Object execute(Object[] data) {
+    protected Object execute(Object[] data, State state) {
         if (returnType == Attribute.Type.DOUBLE) {
             double total = 0;
             for (Object aObj : data) {
@@ -82,7 +86,7 @@ public class CustomPlusFunctionExtension extends FunctionExecutor {
      * @return the function result
      */
     @Override
-    protected Object execute(Object data) {
+    protected Object execute(Object data, State state) {
         if (returnType == Attribute.Type.DOUBLE) {
             return Double.parseDouble(String.valueOf(data));
         } else {
@@ -90,18 +94,10 @@ public class CustomPlusFunctionExtension extends FunctionExecutor {
         }
     }
 
+
     @Override
     public Attribute.Type getReturnType() {
         return returnType;
     }
 
-    @Override
-    public Map<String, Object> currentState() {
-        return new HashMap<>();
-    }
-
-    @Override
-    public void restoreState(Map<String, Object> map) {
-
-    }
 }
